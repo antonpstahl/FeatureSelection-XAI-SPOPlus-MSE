@@ -1,6 +1,6 @@
 # Auswertung: Vorstudie mit planted effects (Stand 18.11.2026)
 
-Grundlage: [prestudy_including_planted_effects.ipynb](../notebooks/prestudy_including_planted_effects.ipynb) und [prestudy_including_planted_effects.csv](../results/prestudy_including_planted_effects.csv) (Gitter 5×5 und 10×10, deg ∈ {1, 2, 4, 6}, noise ∈ {0, 0.5}, n ∈ {100, 1000}, m = 5 Refits). Dazu kommen zwei Zusatzprüfungen außerhalb des Notebooks (Abschnitt 6). Zahlen ohne weitere Angabe gelten für n = 1000 und noise = 0.5.
+Grundlage: [shortest_path_including_planted_effects.ipynb](../../notebooks/prestudy/shortest_path_including_planted_effects.ipynb) und [shortest_path_including_planted_effects.csv](../../results/prestudy/shortest_path_including_planted_effects.csv) (Gitter 5×5 und 10×10, deg ∈ {1, 2, 4, 6}, noise ∈ {0, 0.5}, n ∈ {100, 1000}, m = 5 Refits). Dazu kommen zwei Zusatzprüfungen außerhalb des Notebooks (Abschnitt 6). Zahlen ohne weitere Angabe gelten für n = 1000 und noise = 0.5.
 
 ## 1 Kurzfazit
 

@@ -6,7 +6,7 @@ build/
 dist/
 
 # uv / venv
-.venv/
+.venv
 
 # Jupyter
 .ipynb_checkpoints/
@@ -19,3 +19,4 @@ gurobi.log
 .DS_Store
 .vscode/
 .idea/
+.venv.nosync/
