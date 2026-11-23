@@ -1,6 +1,16 @@
 # Auswertung: Vorstudie mit planted effects (Stand 18.11.2026)
 
-Grundlage: [shortest_path_including_planted_effects.ipynb](../../notebooks/prestudy/shortest_path_including_planted_effects.ipynb) und [shortest_path_including_planted_effects.csv](../../results/prestudy/shortest_path_including_planted_effects.csv) (Gitter 5×5 und 10×10, deg ∈ {1, 2, 4, 6}, noise ∈ {0, 0.5}, n ∈ {100, 1000}, m = 5 Refits). Dazu kommen zwei Zusatzprüfungen außerhalb des Notebooks (Abschnitt 6). Zahlen ohne weitere Angabe gelten für n = 1000 und noise = 0.5.
+Grundlage: [shortest_path_including_planted_effects.ipynb](../../notebooks/prestudy/shortest_path_including_planted_effects.ipynb) und [shortest_path_including_planted_effects.csv](../../results/prestudy/shortest_path_including_planted_effects.csv) (Gitter 5×5 und 10×10, deg ∈ {1, 2, 4, 6}, noise ∈ {0, 0.5}, n ∈ {100, 1000}, m = 5 Refits). Dazu kommen zwei Zusatzprüfungen außerhalb des Notebooks (Abschnitt 6). Zahlen ohne weitere Angabe gelten für n = 1000 und noise = 0.5. „Wahre Kostenfunktion“ meint E[c | x] des Generators (im Code `oracle`).
+
+Bezeichnungen: **H1** = Die Rangfolgen der Features nach ΔMSE und nach ΔRegret weichen für dasselbe Modell voneinander ab. **H2** = Das SPO+-Modell stützt sich stärker auf entscheidungskritische Features als das MSE-Modell.
+
+## Lesehilfe
+
+- **PFI-Wert eines Features** = um wie viel der Fehler auf der Testmenge steigt, wenn man die Spalte dieses Features zufällig mischt (Mittel über K = 10 Mischungen). Groß heißt: Ohne dieses Feature wird das Modell schlechter, also stützt es sich darauf. ≈ 0 heißt: Das Modell braucht es nicht. Leicht negative Werte sind Zufallsschwankung.
+- **ΔMSE** misst das am Vorhersagefehler (Wichtigkeit für die *Vorhersage*), **ΔRegret** am normierten Regret (Wichtigkeit für die *Entscheidung*).
+- **Zeile „wahr“** = dieselbe Messung an der wahren Kostenfunktion E[c | x]. Hier ist bekannt, welche Features kritisch sind, die Werte zeigen also das richtige Ergebnis. In den Tabellen unten ist sie die dritte Zahl.
+- **Anteile** = PFI-Wert eines Features bzw. einer Gruppe geteilt durch die Summe über alle Features (negative Werte vorher auf 0 gesetzt). Damit lassen sich Modelle mit unterschiedlichem Niveau vergleichen.
+- **Gepaarte Differenz** = PFI(SPO+) − PFI(MSE), je Refit gebildet (beide Modelle auf denselben Daten), dann gemittelt. Positiv heißt: Unter SPO+ ist das Feature wichtiger. `*` heißt: Das 95-%-Intervall über die 5 Refits schließt 0 aus.
 
 ## 1 Kurzfazit
 
@@ -12,7 +22,7 @@ Grundlage: [shortest_path_including_planted_effects.ipynb](../../notebooks/prest
 
 ## 2 Generator-Check
 
-- **Pfadanteile:** zwischen 7 % (mitte, deg = 6) und 37 % (links-unten, deg = 6), also im Zielbereich von AP 5 (≤ ca. 70 %). Bei noise = 0.5 entstehen zusätzlich Mischpfade („andere“: bis 20 % bei deg = 1, unter 5 % ab deg = 4).
+- **Pfadanteile:** zwischen 7 % (mitte, deg = 6) und 37 % (links-unten, deg = 6), also kein Pfad dominiert (Zielbereich: häufigster Pfad ≤ ca. 70 %). Bei noise = 0.5 entstehen zusätzlich Mischpfade („andere“: bis 20 % bei deg = 1, unter 5 % ab deg = 4).
 - **Treppe:** Bei noise = 0 ist sie in jedem deg zu 24,9 % optimal, weil ihre Kosten konstant sind. Sie gewinnt, wenn x1 und x2 beide eher positiv sind.
 - **Wahre Kostenfunktion:** ΔRegret bei x3 bis x5 ist exakt 0, ΔMSE bei x5 ist exakt 0. Die geplante Struktur ist also korrekt umgesetzt.
 - **Asymmetrie x1/x2:** x2 treibt 9 Kanten (Summe B = 12), x1 nur 8 (Summe B = 11). Im 10×10-Gitter sind es 22/30 gegenüber 20/28. Der Grund: „mitte“ teilt Kanten mit beiden Eckpfaden, aber nicht gleich viele. Daher ist ΔRegret bei x2 durchgehend größer als bei x1 (wahre Kostenfunktion, 5×5, deg = 6: 0.40 vs. 0.29). Das ist harmlos, muss aber erwähnt oder symmetrisiert werden.
@@ -64,7 +74,7 @@ Anteil der Ablenker x3 und x4 am ΔMSE_adj (MSE-Modell / SPO+-Modell / wahre Kos
 
 ## 6 Zusatzprüfung: SPO+-Gewichte bleiben auf der Initialisierung
 
-Setting: 5×5, deg = 2, noise = 0.5, n = 1000. Das Skript liegt nur in der Scratchpad-Ablage, nicht im Projekt.
+Setting: 5×5, deg = 2, noise = 0.5, n = 1000. Das Skript ist nicht Teil des Repos.
 
 **Korrelation zwischen gelernten und initialen Gewichten** je Kantengruppe und Feature:
 
@@ -102,7 +112,3 @@ Setting: 5×5, deg = 2, noise = 0.5, n = 1000. Das Skript liegt nur in der Scrat
 4. **„Knapp verfehlende“ Ablenker ergänzen.** Mit Grundkosten 2 sind die Ablenker so teuer, dass kein Modell sie je wählt. ΔRegret ist dort deshalb für jedes Modell 0, und die Losses lassen sich nicht unterscheiden. Mit a_high ≈ 0.5–1 (oder einer zweiten Ablenker-Stufe) würden Fehlvorhersagen auf diesen Kanten Entscheidungen kippen. Erst dann kann sich zeigen, ob SPO+ sie besser beachtet.
 5. **Die x1/x2-Asymmetrie** im Text erwähnen oder die Pfade symmetrisieren.
 6. **noise = 0, deg = 1** als Kontrollfall kennzeichnen, weil das lineare Modell dort exakt ist.
-
-## 8 Mögliche Frage an Zähringer (ergänzend zu Roadmap AP 9)
-
-Die SPO+-Gewichte im entscheidungsneutralen Raum bleiben auf der Initialisierung, was SHAP- oder koeffizientenbasierte Erklärungen verzerrt. Soll das als eigener Befund in die Arbeit (XAI-Methode × Loss), oder soll es durch eine feste Konvention neutralisiert werden, etwa Null-Initialisierung, Projektion oder Ridge?
