@@ -1,0 +1,20 @@
+Studie,Datenstruktur,"Regret, deg 1
+MSE / SPO+","Regret, deg 6
+MSE / SPO+","ΔMSE-Anteil Ablenker, deg 6
+MSE / SPO+ / wahr","ΔRegret-Anteil x1, x2, deg 6
+MSE / SPO+"
+"Shortest Path 5×5
+PyEPO","B zufällig,
+alle 5 Features wirken","0,154 / 0,155","0,124 / 0,069",keine Grundwahrheit,keine Grundwahrheit
+"Knapsack 32 Items
+PyEPO","B zufällig,
+alle 5 Features wirken","0,112 / 0,114","0,148 / 0,082",keine Grundwahrheit,keine Grundwahrheit
+"Shortest Path 5×5
+planted","x1, x2 kritisch; x3, x4 Ablenker;
+x5 Rauschen","0,064 / 0,064","0,085 / 0,026","0,13 / 0,10 / 0,07","1,00 / 1,00"
+"Shortest Path 10×10
+planted",wie 5×5,"0,031 / 0,031","0,068 / 0,015","0,25 / 0,16 / 0,15","1,00 / 1,00"
+"Knapsack 32 Items
+planted","x1, x2 kritisch; x3 „zu schwer“,
+x4 „gratis“; x5 Rauschen","0,095 / 0,098","0,036 / 0,026","x3: 0,16 / 0,005 / 0,16
+x4: 0,16 / 0,12 / 0,17","0,92 / 0,99"

@@ -18,6 +18,7 @@ notebooks/prestudy/
   shortest_path_including_planted_effects.ipynb
   knapsack_no_planted_effects.ipynb
   knapsack_including_planted_effects.ipynb
+  prestudy_summary.ipynb        overview table of all four (reads the CSVs only)
 results/prestudy/               CSV outputs of the notebooks (same names)
 docs/prestudy/                  analysis notes
 ```
